@@ -1,5 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, current } from '@reduxjs/toolkit';
 import { getUserInfo } from '../service/opencagedataApi';
+import { exchangeCurrency } from '../service/exchangeAPI';
 
 export const fetchBaseCurrency = createAsyncThunk(
   'currency/fetchBaseCurrency',
@@ -16,6 +17,18 @@ export const fetchBaseCurrency = createAsyncThunk(
       return response.results[0].annotations.currency.iso_code;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
+    }
+  },
+);
+
+export const fetchExangeCurrency = createAsyncThunk(
+  'currency fetchExangeCurrency',
+  async (currency, thunkAPI) => {
+    try {
+      const date = await exchangeCurrency(currency);
+      return date;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   },
 );
