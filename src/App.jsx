@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import { getUserInfo } from './service/opencagedataApi';
 import { useDispatch } from 'react-redux';
 import { fetchBaseCurrency } from './redux/operations';
+import { setBaseCurrency } from './redux/currensySlice';
 
 const HomePage = lazy(() => import('./pages/Home'));
 const RatesPage = lazy(() => import('./pages/Rates'));
@@ -24,6 +25,7 @@ export const App = () => {
 
     function error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
+      dispatch(setBaseCurrency('USD'));
     }
 
     navigator.geolocation.getCurrentPosition(success, error, options);
